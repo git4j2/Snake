@@ -67,9 +67,11 @@
 
 		function main() {
 			setTimeout(function onTick() {
-				clearCanvas();
+                clearCanvas();
+                drawFood();
 				advanceSnake();
-				drawSnake();
+                drawSnake();
+
 				// Call main again
 				main();
 			}, 100)
@@ -84,7 +86,17 @@
 			ctx.strokeStyle = "black";
 			ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 			ctx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
-		}
+        }
+
+        /**
+       * Draw the food on the canvas
+       */
+        function drawFood() {
+            ctx.fillStyle = FOOD_COLOUR;
+            ctx.strokestyle = FOOD_BORDER_COLOUR;
+            ctx.fillRect(foodX, foodY, 10, 10);
+            ctx.strokeRect(foodX, foodY, 10, 10);
+        }
 
 		/**
        * Advances the snake by changing the x-coordinates of its parts
@@ -96,6 +108,16 @@
 			snake.unshift(head);
 			snake.pop();
 		}
+
+        /**
+       * Generates a random number that is a multiple of 10 given a minumum
+       * and a maximum number
+       * @param { number } min - The minimum number the random number can be
+       * @param { number } max - The maximum number the random number can be
+       */
+        function randomTen(min, max) {
+            return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+        }
 
 		/**
        * Draws the snake on the canvas
